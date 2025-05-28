@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_7/product_page.dart';
-
-void main() => runApp(MaterialApp(home: ShopPage()));
+import 'package:flutter_application_7/product_detail_page.dart';
+import 'product_detail_page.dart';
 
 class ShopPage extends StatelessWidget {
   final List<Map<String, String>> products = [
@@ -21,152 +20,77 @@ class ShopPage extends StatelessWidget {
       'name': 'JIHC Cap',
       'price': '\$25.00',
       'badge': 'HOT',
-      'image': 'assets/images/cap.jpg',
+      'image': 'assets/images/telepon1.jpg',
     },
     {
       'name': 'JIHC Tote Bag',
       'price': '1,500 tg',
       'badge': 'LIMITED',
-      'image': 'assets/images/bag.jpg',
+      'image': 'assets/images/zat2.jpg',
     },
     {
       'name': 'JIHC Notebook',
       'price': '700 tg',
       'badge': 'NEW',
-      'image': 'assets/images/notebook.jpg',
+      'image': 'assets/images/sumka.jpg',
     },
     {
       'name': 'JIHC Hoodie',
       'price': '\$45.00',
       'badge': 'SALE',
-      'image': 'assets/images/hoodie.jpg',
-    },
-    {
-      'name': 'JIHC Keychain',
-      'price': '300 tg',
-      'badge': 'HOT',
-      'image': 'assets/images/keychain.jpg',
-    },
-    {
-      'name': 'JIHC Pen',
-      'price': '150 tg',
-      'badge': 'NEW',
-      'image': 'assets/images/pen.jpg',
+      'image': 'assets/images/braslet.jpg',
     },
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text('JIHC BRAND', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22)),
-        centerTitle: true,
-        leading: Icon(Icons.menu, color: Colors.black),
-        actions: [
-          Icon(Icons.shopping_cart_outlined, color: Colors.black),
-          SizedBox(width: 16),
-        ],
-      ),
-      body: ListView(
-        padding: EdgeInsets.all(16),
-        children: [
-          // Promo Banner
-          Container(
-            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(16)),
-            padding: EdgeInsets.all(16),
-            child: Row(
-              children: [
-                Image.asset('assets/images/araikusik.jpg', height: 80),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Buy 1\nGet 3', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                    SizedBox(height: 8),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Shop Now'),
-                      style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 24),
-          // Categories
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildCategoryIcon(Icons.shopping_bag, 'Bags'),
-              _buildCategoryIcon(Icons.local_mall, 'Clothes'),
-              _buildCategoryIcon(Icons.menu_book, 'Copybooks'),
-              _buildCategoryIcon(Icons.category, 'Accessories'),
-            ],
-          ),
-          SizedBox(height: 20),
-          // New Arrivals
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('New Arrival', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              Text('See all', style: TextStyle(color: Colors.orange)),
-            ],
-          ),
-          SizedBox(height: 16),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: products.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 12,
-              mainAxisSpacing: 12,
-              childAspectRatio: 0.75,
-            ),
-            itemBuilder: (context, index) {
-              final product = products[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => ProductDetailPage(product: product),
-                    ),
-                  );
-                },
-                child: _buildProductCard(
-                  product['name']!,
-                  product['price']!,
-                  product['badge']!,
-                  product['image']!,
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCategoryIcon(IconData icon, String label) {
-    return Column(
-      children: [
-        CircleAvatar(
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+        backgroundColor: Colors.grey.shade100,
+        appBar: AppBar(
           backgroundColor: Colors.white,
-          radius: 28,
-          child: Icon(icon, size: 28, color: Colors.black),
+          elevation: 0,
+          title: Text('Welcome, Student', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+          centerTitle: true,
+          bottom: TabBar(
+            labelColor: Colors.black,
+            unselectedLabelColor: Colors.grey,
+            tabs: [
+              Tab(icon: Icon(Icons.shopping_bag), text: 'Bags'),
+              Tab(icon: Icon(Icons.local_mall), text: 'Clothes'),
+              Tab(icon: Icon(Icons.menu_book), text: 'Copybooks'),
+              Tab(icon: Icon(Icons.category), text: 'Accessories'),
+            ],
+          ),
         ),
-        SizedBox(height: 8),
-        Text(label),
-      ],
+        body: TabBarView(
+          children: List.generate(4, (index) => _buildProductGrid(context)),
+        ),
+      ),
     );
   }
 
-  Widget _buildProductCard(String name, String price, String badge, String imagePath) {
+  Widget _buildProductGrid(BuildContext context) {
+    return GridView.builder(
+      padding: EdgeInsets.all(16),
+      itemCount: 6,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 0.75,
+      ),
+      itemBuilder: (context, index) {
+        final product = products[index];
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (_) => ProductDetailPage(product: product)));
+          },
+          child: _buildProductCard(product),
+        );
+      },
+    );
+  }
+
+  Widget _buildProductCard(Map<String, String> product) {
     return Container(
       decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(12)),
       padding: EdgeInsets.all(12),
@@ -175,25 +99,22 @@ class ShopPage extends StatelessWidget {
         children: [
           Stack(
             children: [
-              Image.asset(imagePath, height: 120),
+              Image.asset(product['image']!, height: 120),
               Positioned(
                 top: 8,
                 left: 8,
                 child: Container(
-                  color: badge.contains("SALE") ? Colors.red : Colors.orange,
+                  color: product['badge']!.contains('SALE') ? Colors.red : Colors.orange,
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  child: Text(
-                    badge,
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  ),
+                  child: Text(product['badge']!, style: TextStyle(color: Colors.white, fontSize: 12)),
                 ),
               ),
             ],
           ),
           SizedBox(height: 8),
-          Text(name, style: TextStyle(fontWeight: FontWeight.bold)),
+          Text(product['name']!, style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 4),
-          Text(price),
+          Text(product['price']!),
         ],
       ),
     );

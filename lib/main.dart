@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_7/shop_page.dart';
+import 'shop_page.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -26,13 +27,11 @@ class _LoginPageState extends State<LoginPage> {
   String? _errorMessage;
 
   void _login() {
-    String username = _usernameController.text.trim();
-    String password = _passwordController.text;
-
-    if (username == 'student' && password == '1234') {
+    if (_usernameController.text.trim() == 'student' &&
+        _passwordController.text == '1234') {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (_) => HomePage()),
       );
     } else {
       setState(() {
@@ -51,34 +50,18 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                'Login',
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-              ),
+              Text('Login', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
               SizedBox(height: 30),
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(labelText: 'Username'),
-              ),
-              TextField(
-                controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-              ),
+              TextField(controller: _usernameController, decoration: InputDecoration(labelText: 'Username')),
+              TextField(controller: _passwordController, decoration: InputDecoration(labelText: 'Password'), obscureText: true),
               if (_errorMessage != null) ...[
                 SizedBox(height: 10),
-                Text(
-                  _errorMessage!,
-                  style: TextStyle(color: Colors.red),
-                ),
+                Text(_errorMessage!, style: TextStyle(color: Colors.red)),
               ],
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _login,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-                ),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.orange, padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15)),
                 child: Text('Login'),
               ),
             ],
@@ -96,57 +79,36 @@ class HomePage extends StatelessWidget {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue.shade800, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+        color: Colors.orange, // Full background color
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Spacer(),
             Text(
               'JIHC BRAND SHOP',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
             ),
             Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
-              child: Column(
-                children: [
-                  Text(
-                    'Style begins with you',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
+            Column(
+              children: [
+                Text(
+                  'Style begins with you',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+                SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => ShopPage()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.orange,
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
                   ),
-                  SizedBox(height: 16),
-                 ElevatedButton(
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ShopPage()),
-    );
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.orange,
-    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-  ),
-  child: Text(
-    'Get Started',
-    style: TextStyle(fontSize: 16),
-  ),
-),
-                ],
-              ),
+                  child: Text('Get Started', style: TextStyle(fontSize: 16)),
+                ),
+                SizedBox(height: 40),
+              ],
             ),
           ],
         ),
